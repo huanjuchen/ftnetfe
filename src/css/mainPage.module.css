@@ -1,0 +1,21 @@
+@media (max-height: 767px) {
+    .banner{
+        text-align: center;
+        margin-top: 15%;
+    }
+}
+
+@media (min-height: 768px) and (max-height: 991px){
+    .banner{
+        text-align: center;
+        margin-top: 20%;
+    }
+
+}
+
+@media (min-height: 992px) {
+    .banner{
+        text-align: center;
+        margin-top: 25%;
+    }
+}
