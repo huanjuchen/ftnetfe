@@ -1,0 +1,11 @@
+.folderView{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+}
+
+.divideBox{
+    height: 52px;
+    width: 100%;
+}

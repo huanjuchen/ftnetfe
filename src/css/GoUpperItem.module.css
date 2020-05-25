@@ -1,0 +1,30 @@
+.GoBackItemBox{
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    background-color: #FAFAFA;
+    margin-top: 2px;
+    box-shadow: 0 3px 3px #eeeeee;
+    opacity: 0.8;
+    cursor: pointer;
+}
+
+.GoBackItemBox:hover{
+    opacity: 1.0;
+}
+
+.GoBackItemIcon{
+    width: 24px;
+    height: 24px;
+    margin: 4px;
+    padding: 4px;
+}
+
+
+.GoBackItemText{
+    font-size: 18px;
+    margin-top: 4px;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}

@@ -1,0 +1,44 @@
+/*
+目录 Item 组件 样式
+*/
+
+.pathItem {
+    height: 32px;
+    padding: 2px;
+    margin: 2px;
+    opacity: 0.7;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+
+}
+
+.pathItem:hover{
+    opacity: 1.0;
+}
+
+.pathImg {
+    opacity: 0.7;
+    float: left;
+    height: 28px;
+    width: 28px;
+    margin: 2px;
+}
+
+
+.pathText{
+    opacity: 0.7;
+    float: left;
+    height: 28px;
+    font-size: 18px;
+    margin: 2px;
+    padding: 2px;
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+
+
+
+

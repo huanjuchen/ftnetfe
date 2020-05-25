@@ -1,0 +1,48 @@
+.headerBox{
+    height: 48px;
+    background-color: #E0E0E0FF;
+    box-shadow: 0 3px 3px 1px #eeeeee;
+    display: flex;
+    flex-wrap: nowrap;
+    position: fixed;
+    z-index: 999;
+}
+
+@media (max-width:767px) {
+    .headerBox{
+        width: 100%;
+    }
+}
+
+@media (min-width:768px) and (max-width:991px){
+    .headerBox{
+        width: 60%;
+        margin-left: 20%;
+        margin-right: 20%;
+    }
+}
+
+@media (min-width:992px) {
+    .headerBox{
+        width: 30%;
+        margin-left: 35%;
+        margin-right: 35%;
+    }
+}
+
+
+
+.headerText{
+    font-size: 20px;
+    margin-top: 8px;
+    padding-top: 6px;
+}
+
+.homeImg{
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    vertical-align: center;
+    margin: 8px;
+    padding: 2px;
+}

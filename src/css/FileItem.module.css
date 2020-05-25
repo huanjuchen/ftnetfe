@@ -1,0 +1,25 @@
+/*
+
+ */
+
+.fileItem{
+    height: 32px;
+    padding:2px;
+    margin: 2px;
+    opacity: 0.7;
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+}
+
+.fileItem:hover{
+    opacity: 1.0;
+}
+
+.fileImg{
+    opacity: 0.7;
+    float: left;
+    height: 28px;
+    width: 28px;
+    margin: 2px;
+}

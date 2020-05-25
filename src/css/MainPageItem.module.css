@@ -1,0 +1,19 @@
+.itemBox {
+    width: 100%;
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: center;
+    height: 32px;
+}
+
+.itemText{
+    opacity: 0.6;
+    cursor: pointer;
+    font-size: large;
+    margin: 3px;
+    padding: 3px;
+}
+
+.itemText:hover{
+    opacity: 1.0;
+}

@@ -1,30 +1,27 @@
 import React from "react";
-import PathItemCss from "../css/pathItem.module.css";
-import FolderImg from "../img/folderImg.png"
+import PathItemCss from "../css/PathItem.module.css";
+import FolderImg from "../img/folderImg.png";
 
 
-class PathItem extends React.Component{
+class PathItem extends React.Component {
 
     // eslint-disable-next-line no-useless-constructor
-    constructor(props){
+    constructor(props) {
         super(props);
     }
 
-    doSomething(){
-        console.log("Hello Mother Fuck");
+    toFolderView(val) {
+        this.props.toFolderView(val);
     }
 
-
-    render(){
+    render() {
         return <div className={PathItemCss.pathItem}>
             <img className={PathItemCss.pathImg} src={FolderImg} alt={"文件夹"}/>
-            <div className={PathItemCss.pathText}>
-                <a>
-                    {this.props.keyName}
-                </a>
-            </div>
+            <div className={PathItemCss.pathText} onClick={() => {
+                this.toFolderView(this.props.path.url);
+            }}>
+                { this.props.path.name}</div>
         </div>
-
     }
 }
 
