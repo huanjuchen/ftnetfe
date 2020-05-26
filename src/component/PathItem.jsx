@@ -1,6 +1,6 @@
 import React from "react";
 import PathItemCss from "../css/PathItem.module.css";
-import FolderImg from "../img/folderImg.png";
+import FolderImg from "../img/folderImg.svg";
 
 
 class PathItem extends React.Component {
@@ -16,11 +16,13 @@ class PathItem extends React.Component {
 
     render() {
         return <div className={PathItemCss.pathItem}>
-            <img className={PathItemCss.pathImg} src={FolderImg} alt={"文件夹"}/>
+            <div className={PathItemCss.pathImg}>
+                <img width="100%" height="100%" src={FolderImg} alt={"文件夹"}/>
+            </div>
             <div className={PathItemCss.pathText} onClick={() => {
                 this.toFolderView(this.props.path.url);
             }}>
-                { this.props.path.name}</div>
+                {this.props.path.name}</div>
         </div>
     }
 }

@@ -5,6 +5,8 @@ import mainPageCss from "../css/MainPage.module.css";
 import BannerImg from "../img/banner.png";
 import FtnetLoading from "../component/FtnetLoading";
 import MainPageItem from "../component/MainPageItem";
+import {getRandomNum} from "../util/FtUtils";
+
 
 import FtConfig from "../ftconfig";
 
@@ -51,7 +53,12 @@ class MainPage extends React.Component {
     doGetData() {
         this.setState({isLoad: true});
         this.setState({success: false});
-        axios.get("/indexData").then((response) => {
+        let url="/indexData";
+        if (FtConfig.dev){
+            url="/api"+url;
+        }
+
+        axios.get(url).then((response) => {
             this.setState({pathKey: response.data.data});
             this.setState({isLoad: false});
             this.setState({success: true});
@@ -83,7 +90,7 @@ class MainPage extends React.Component {
             正在加载
              */
             elms=[];
-            elms.push(<FtnetLoading key={1}/>)
+            elms.push(<FtnetLoading key={getRandomNum()}/>)
         }else {
             /*
             加载完成
@@ -91,7 +98,7 @@ class MainPage extends React.Component {
             elms=[];
             for (let i = 0; i < pathKey.length; i++) {
                 // elms.push(<PathItem toFolderView={(param)=>{this.toFolder(param)}} key={i} keyName={pathKey[i]}/>)
-                let el=<MainPageItem toFolderView={(param)=>{this.toFolder(param)}} key={pathKey[i]} itemName={pathKey[i]} />
+                let el=<MainPageItem toFolderView={(param)=>{this.toFolder(param)}} key={pathKey[i]+""+getRandomNum()} itemName={pathKey[i]} />
                 elms.push(el);
             }
         }

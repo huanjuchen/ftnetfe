@@ -18,7 +18,9 @@ class GoUpperItem extends React.Component{
 
     render() {
         return <div onClick={()=>{this.doGoUpper(this.props.pathUrl)}} className={GoUpperItemCss.GoBackItemBox}>
-            <img src={GoUpperIconImg} className={GoUpperItemCss.GoBackItemIcon} alt={"上一级"}/>
+            <div className={GoUpperItemCss.GoBackItemIcon}>
+                <img src={GoUpperIconImg} width="100%" height="100%" alt={"上一级"}/>
+            </div>
             <div className={GoUpperItemCss.GoBackItemText}>返回上一级</div>
         </div>
     }

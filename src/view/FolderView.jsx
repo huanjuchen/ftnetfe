@@ -5,6 +5,8 @@ import FolderViewHeader from "../component/FolderViewHeader";
 import FtConfig from "../ftconfig";
 import GoUpperItem from "../component/GoUpperItem";
 import PathItem from "../component/PathItem";
+import FileItem from "../component/FileItem";
+import {getRandomNum} from "../util/FtUtils";
 
 import axios from "axios";
 
@@ -49,6 +51,19 @@ class FolderView extends React.Component {
         this.props.history.push("/");
     }
 
+    /**
+     * 跳转到文件详情页面
+     * @param param
+     */
+    toFileDetail(param) {
+        let obj = {
+            pathname: "/fileDetail",
+            state: param
+        };
+        this.props.history.push(obj);
+    }
+
+
     doUpdateFolderData(param) {
         if (FtConfig.dev) {
             console.log("doGetFolderData---param的值为: " + param);
@@ -63,7 +78,6 @@ class FolderView extends React.Component {
         }
         this.doGetData();
     }
-
 
     /**
      * 对跳转的传入的参数进行赋值
@@ -112,8 +126,11 @@ class FolderView extends React.Component {
                 return;
             }
             this.isLoad = true;
-            let url="/path/json"+param;
-            url=encodeURI(url);
+            let url = "/path/json" + param;
+            if (FtConfig.dev){
+                url="/api"+url;
+            }
+            url = encodeURI(url);
             axios.get(url).then((response) => {
                 if (response && response.data.code === 200) {
                     this.setState({data: response.data.data});
@@ -144,9 +161,9 @@ class FolderView extends React.Component {
 
         let p = this.state.data.parentPath;
         let sp = this.state.data.subPaths;
-        // let sf = this.state.data.subFiles;
+        let sf = this.state.data.subFiles;
         if (p != null) {
-            gbi = <GoUpperItem key={p} pathUrl={p} toFolderView={(param) => {
+            gbi = <GoUpperItem key={p + "" + getRandomNum()} pathUrl={p} toFolderView={(param) => {
                 this.doUpdateFolderData(param)
             }}/>
         }
@@ -155,8 +172,17 @@ class FolderView extends React.Component {
             spe = [];
 
             for (let i = 0; i < sp.length; i++) {
-                spe.push(<PathItem path={sp[i]} key={sp[i].name} toFolderView={(param) => {
+                spe.push(<PathItem path={sp[i]} key={sp[i].name + "" + getRandomNum()} toFolderView={(param) => {
                     this.doUpdateFolderData(param)
+                }}/>)
+            }
+        }
+
+        if (sf != null) {
+            sfe = [];
+            for (let i = 0; i < sf.length; i++) {
+                sfe.push(<FileItem path={sf[i]} key={sf[i].name + "" + getRandomNum()} toFileDetail={(param) => {
+                    this.toFileDetail(param)
                 }}/>)
             }
         }
@@ -174,6 +200,7 @@ class FolderView extends React.Component {
                 <div className={FvwCss.folderView}>
                     {gbi}
                     {spe}
+                    {sfe}
                 </div>
             </div>
         </div>
