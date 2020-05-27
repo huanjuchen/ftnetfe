@@ -81,7 +81,6 @@ class MainPage extends React.Component {
         this.props.history.push(path);
     }
 
-
     render() {
         let elms = [];
         let pathKey = this.state.pathKey;

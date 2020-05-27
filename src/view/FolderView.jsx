@@ -127,8 +127,8 @@ class FolderView extends React.Component {
             }
             this.isLoad = true;
             let url = "/path/json" + param;
-            if (FtConfig.dev){
-                url="/api"+url;
+            if (FtConfig.dev) {
+                url = "/api" + url;
             }
             url = encodeURI(url);
             axios.get(url).then((response) => {
@@ -139,9 +139,7 @@ class FolderView extends React.Component {
             }).catch(error => {
                 console.error(error);
                 this.isLoad = false;
-            })
-
-
+            });
         }
     }
 
@@ -181,7 +179,8 @@ class FolderView extends React.Component {
         if (sf != null) {
             sfe = [];
             for (let i = 0; i < sf.length; i++) {
-                sfe.push(<FileItem path={sf[i]} key={sf[i].name + "" + getRandomNum()} toFileDetail={(param) => {
+                sfe.push(<FileItem parentPath={this.path} parentKeyName={this.keyName} path={sf[i]}
+                                   key={sf[i].name + "" + getRandomNum()} toFileDetail={(param) => {
                     this.toFileDetail(param)
                 }}/>)
             }

@@ -15,7 +15,8 @@ class FileDetailView extends React.Component {
         this.state = {
             data: null
         }
-
+        this.parentPath=null;
+        this.parentKeyName=null;
         this.ready = false;
         this.load = false;
         this.fileUrl = null;
@@ -29,7 +30,10 @@ class FileDetailView extends React.Component {
         if (fl != null) {
             this.fileUrl = fl.fileUrl;
             this.ready = true;
+            this.parentPath=fl.parentPath;
+            this.parentKeyName=fl.parentKeyName;
         }
+
     }
 
     doGetData() {
@@ -53,6 +57,25 @@ class FileDetailView extends React.Component {
 
 
         }
+    }
+
+    toMainPage(){
+        this.props.history.push("/");
+    }
+
+    goBack(pkn,path){
+        let stateObj={
+            keyName:pkn,
+            path:path
+        }
+
+        let obj={
+            pathname:"/viewFolder",
+            state:stateObj
+        }
+
+        this.props.history.push(obj)
+
     }
 
 
@@ -79,15 +102,15 @@ class FileDetailView extends React.Component {
                 <div className={FileDetailCss.fileViewBox}>
                     <div className={FileDetailCss.fileDesBox}>
                         <div className={FileDetailCss.fileTextBox}>
-                            <div className={FileDetailCss.fileSpan}>文件名：</div>
+                            <b>文件名：</b>
                             {this.state.data.name}
                         </div>
                         <div className={FileDetailCss.fileTextBox}>
-                            <div className={FileDetailCss.fileSpan}>大小：</div>
+                            <b>大小：</b>
                             {this.state.data.size}
                         </div>
                         <div className={FileDetailCss.fileTextBox}>
-                            <div className={FileDetailCss.fileSpan}>类型：</div>
+                            <b>类型：</b>
                             {this.state.data.type}
                         </div>
                     </div>
@@ -96,6 +119,10 @@ class FileDetailView extends React.Component {
                     <a href={encodeURI(downloadPre + "?path=" + this.state.data.url)}>
                         <button className={FileDetailCss.fileHandleBtn}>下载</button>
                     </a>
+                    <button onClick={()=>{
+                        this.goBack(this.parentKeyName,this.parentPath)
+                    }} className={FileDetailCss.fileHandleBtn}>返回目录</button>
+                    <button onClick={()=>{this.toMainPage()}} className={FileDetailCss.fileHandleBtn}>返回主页</button>
                 </div>
             </div>
         } else {
@@ -105,8 +132,8 @@ class FileDetailView extends React.Component {
                     <img src={EmptyIcon} width={"25%"} height={"25%"} alt={"暂无数据"}/>
                 </div>
                 <div className={FileDetailCss.emptyTextBox}>
-                    <div className={FileDetailCss.emptyText}>
-                        暂无数据
+                    <div onClick={()=>{this.toMainPage()}} className={FileDetailCss.emptyText}>
+                        暂无数据,点击返回首页
                     </div>
                 </div>
             </div>
