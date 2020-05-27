@@ -20,7 +20,7 @@ class PathItem extends React.Component {
                 <img width="100%" height="100%" src={FolderImg} alt={"文件夹"}/>
             </div>
             <div className={PathItemCss.pathText} onClick={() => {
-                this.toFolderView(this.props.path.url);
+                this.toFolderView(this.props.path);
             }}>
                 {this.props.path.name}</div>
         </div>

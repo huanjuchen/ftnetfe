@@ -5,6 +5,7 @@ import EmptyIcon from "../img/empty.svg";
 import FileDetailCss from "../css/FileDetail.module.css";
 import Axios from "axios";
 import FtConfig from "../ftconfig";
+import store from "../store";
 
 
 class FileDetailView extends React.Component {
@@ -15,8 +16,6 @@ class FileDetailView extends React.Component {
         this.state = {
             data: null
         }
-        this.parentPath=null;
-        this.parentKeyName=null;
         this.ready = false;
         this.load = false;
         this.fileUrl = null;
@@ -26,19 +25,15 @@ class FileDetailView extends React.Component {
      * 初始化数据
      */
     initData() {
-        let fl = this.props.location.state;
-        if (fl != null) {
+        let fl = store.getState().FileDetailView;
+        if (fl.fileUrl != null) {
             this.fileUrl = fl.fileUrl;
             this.ready = true;
-            this.parentPath=fl.parentPath;
-            this.parentKeyName=fl.parentKeyName;
         }
-
     }
 
     doGetData() {
         if (this.ready) {
-
             let url = "/file/detail?fileUrl=" + this.fileUrl;
             if (FtConfig.dev) {
                 url = "/api" + url;
@@ -54,8 +49,6 @@ class FileDetailView extends React.Component {
                 this.load = false;
                 console.error(error);
             })
-
-
         }
     }
 
@@ -64,17 +57,7 @@ class FileDetailView extends React.Component {
     }
 
     goBack(pkn,path){
-        let stateObj={
-            keyName:pkn,
-            path:path
-        }
-
-        let obj={
-            pathname:"/viewFolder",
-            state:stateObj
-        }
-
-        this.props.history.push(obj)
+        this.props.history.push("/viewFolder")
 
     }
 

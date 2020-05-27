@@ -4,13 +4,9 @@ import FileIcon from "../img/fileIcon.svg";
 
 class FileItem extends React.Component {
 
-    toFileDetails(fileUrl, parentPath,parentKeyName) {
-        let obj = {
-            fileUrl: fileUrl,
-            parentPath: parentPath,
-            parentKeyName:parentKeyName
-        }
-        this.props.toFileDetail(obj);
+    toFileDetails(fileUrl) {
+
+        this.props.toFileDetail({fileUrl:fileUrl});
     }
 
 

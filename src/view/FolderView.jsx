@@ -9,6 +9,8 @@ import FileItem from "../component/FileItem";
 import {getRandomNum} from "../util/FtUtils";
 
 import axios from "axios";
+import store from "../store";
+import actionType from "../store/actionType";
 
 class FolderView extends React.Component {
 
@@ -25,11 +27,11 @@ class FolderView extends React.Component {
         //数据是否已准备好
         this.isReady = false;
         //从共享目录key
-        this.keyName = null;
+        this.shareKey = null;
         //目录的Name以及URL
         this.path = null;
         //是否正在加载
-        this.isLoad = false;
+        this.load = false;
     }
 
     /*
@@ -56,54 +58,48 @@ class FolderView extends React.Component {
      * @param param
      */
     toFileDetail(param) {
-        let obj = {
-            pathname: "/fileDetail",
-            state: param
-        };
-        this.props.history.push(obj);
+        store.dispatch({type: actionType.update_detailView, value: param})
+        this.props.history.push("/fileDetail");
     }
 
 
     doUpdateFolderData(param) {
         if (FtConfig.dev) {
-            console.log("doGetFolderData---param的值为: " + param);
+            console.log("doGetFolderData---param的值为: " + JSON.stringify(param));
         }
 
-        this.keyName = null;
+        this.shareKey = null;
         this.path = null;
-        this.isReady = null;
+        this.ready = false;
         if (param != null) {
-            this.path = {url: param};
-            this.isReady = true;
+            let obj = {
+                path: param
+            }
+            store.dispatch({type: actionType.update_folderView, value: obj});
         }
+
+        this.initParam();
         this.doGetData();
     }
 
-    /**
-     * 对跳转的传入的参数进行赋值
-     */
-    initCallParam() {
-        let pls = this.props.location.state;
-        if (FtConfig.dev) {
-            console.log("pls=" + pls)
-        }
 
-        if (pls != null) {
-            this.isReady = true;
-            if (FtConfig.dev) {
-                console.log("修改后的isReady = " + this.isReady);
-            }
-            let kn = this.props.location.state.keyName;
-            let p = this.props.location.state.path;
-            if (FtConfig.dev) {
-                console.log("location的值: " + pls);
-                console.log("keyName的值: " + kn);
-                console.log("path的值: " + p);
-            }
-            this.keyName = kn;
-            this.path = p;
+    /**
+     * 从数据容器中获取数据
+     */
+    initParam() {
+        let fvd = store.getState().FolderView;
+        if (FtConfig.dev) {
+            console.log("fvd的值: " + JSON.stringify(fvd));
+        }
+        if (fvd.path != null) {
+            this.path = fvd.path;
+            this.ready = true
+        } else if (fvd.shareKey != null) {
+            this.shareKey = fvd.shareKey;
+            this.ready = true;
         }
     }
+
 
     /**
      * 从后端获取数据
@@ -111,21 +107,20 @@ class FolderView extends React.Component {
     doGetData() {
         if (FtConfig.dev) {
             console.log("isReady = " + this.isReady);
-            console.log("")
         }
-        if (this.isReady) {
+        if (this.ready) {
             /*
             处理参数
              */
             let param = "";
-            if (this.keyName != null) {
-                param = "?queryPath=" + this.keyName;
+            if (this.shareKey != null) {
+                param = "?queryPath=" + this.shareKey;
             } else if (this.path != null) {
                 param = "?queryPath=" + this.path.url;
             } else {
                 return;
             }
-            this.isLoad = true;
+            this.load = true;
             let url = "/path/json" + param;
             if (FtConfig.dev) {
                 url = "/api" + url;
@@ -134,18 +129,18 @@ class FolderView extends React.Component {
             axios.get(url).then((response) => {
                 if (response && response.data.code === 200) {
                     this.setState({data: response.data.data});
-                    this.isLoad = false;
+                    this.load = false;
                 }
             }).catch(error => {
                 console.error(error);
-                this.isLoad = false;
+                this.load = false;
             });
         }
     }
 
 
     componentDidMount() {
-        this.initCallParam();
+        this.initParam();
         this.doGetData();
     }
 
@@ -192,7 +187,7 @@ class FolderView extends React.Component {
                 this.state.data.name != null ?
                     <FolderViewHeader title={this.state.data.name} toMain={(param) => {
                         this.doToMain(param)
-                    }}/> : null
+                    }}/> : <FolderViewHeader toMain={(param) => {this.doToMain(param)}}/>
             }
             <div className="mainContainer">
                 <div className={FvwCss.divideBox}/>

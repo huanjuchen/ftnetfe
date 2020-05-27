@@ -12,7 +12,7 @@ class GoUpperItem extends React.Component{
 
 
     doGoUpper(param){
-        this.props.toFolderView(param)
+        this.props.toFolderView({url:param})
     }
 
 

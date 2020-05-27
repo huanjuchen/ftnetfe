@@ -6,11 +6,7 @@ class MainPageItem extends React.Component {
 
 
     toFolderView(param) {
-        let obj = {
-            keyName: param
-        }
-
-        this.props.toFolderView(obj);
+        this.props.toFolderView(param);
     }
 
 

@@ -6,9 +6,11 @@ import BannerImg from "../img/banner.png";
 import FtnetLoading from "../component/FtnetLoading";
 import MainPageItem from "../component/MainPageItem";
 import {getRandomNum} from "../util/FtUtils";
+import actionType from "../store/actionType";
 
 
 import FtConfig from "../ftconfig";
+import store from "../store";
 
 
 /**
@@ -21,10 +23,12 @@ class MainPage extends React.Component {
             isLoad: false,
             success: true,
             pathKey: [],
+            sharePaths: [],
             bannerHeight: 0,
             bannerWidth: 0
         }
     }
+
     componentDidMount() {
         this.doHandlerBannerSize();
         this.doGetData();
@@ -34,6 +38,9 @@ class MainPage extends React.Component {
     处理banner图片尺寸
      */
     doHandlerBannerSize() {
+        if (FtConfig.dev) {
+            console.log("doHandleBannerSize被执行");
+        }
         let ih = window.innerHeight;
         let bh;
         if (ih <= 767) {
@@ -44,60 +51,62 @@ class MainPage extends React.Component {
             bh = ih / 5;
         }
         let bw = bh * 1.34;
-        this.setState({bannerHeight: bh});
-        this.setState({bannerWidth: bw});
+        this.setState({bannerHeight: bh, bannerWidth: bw});
     }
+
     /*
     从后台拉取数据
      */
     doGetData() {
-        this.setState({isLoad: true});
-        this.setState({success: false});
-        let url="/indexData";
-        if (FtConfig.dev){
-            url="/api"+url;
+        // let sharePaths = store.getState().MainPage.sharePath
+        // if (!sharePaths || sharePaths.length === 0) {
+        this.setState({isLoad: true, success: false});
+        let url = "/indexData";
+        if (FtConfig.dev) {
+            url = "/api" + url;
         }
 
         axios.get(url).then((response) => {
-            this.setState({pathKey: response.data.data});
-            this.setState({isLoad: false});
-            this.setState({success: true});
+            // store.dispatch({type: "change_mainPage_sharePath", value: response.data.data});
+            this.setState({isLoad: false, success: true, sharePaths: response.data.data});
         });
+        // }
     }
 
     /*
     跳转到目录查看页面
      */
-    toFolder(param){
-        if (FtConfig.dev){
-            console.log("toFolder传入的值: "+param);
+    toFolder(param) {
+        if (FtConfig.dev) {
+            console.log("toFolder传入的值: " + param);
         }
-
-        let path={
-            pathname:"/viewFolder",
-            state:param
+        let obj = {
+            shareKey: param
         }
-
-        this.props.history.push(path);
+        store.dispatch({type: actionType.update_folderView, value: obj});
+        this.props.history.push("/viewFolder");
     }
 
     render() {
         let elms = [];
-        let pathKey = this.state.pathKey;
-        if (this.state.isLoad){
+        let pathKey = this.state.sharePaths;
+        // let pathKey = store.getState().MainPage.sharePath;
+        if (this.state.isLoad) {
             /*
             正在加载
              */
-            elms=[];
+            elms = [];
             elms.push(<FtnetLoading key={getRandomNum()}/>)
-        }else {
+        } else {
             /*
             加载完成
              */
-            elms=[];
+            elms = [];
             for (let i = 0; i < pathKey.length; i++) {
                 // elms.push(<PathItem toFolderView={(param)=>{this.toFolder(param)}} key={i} keyName={pathKey[i]}/>)
-                let el=<MainPageItem toFolderView={(param)=>{this.toFolder(param)}} key={pathKey[i]+""+getRandomNum()} itemName={pathKey[i]} />
+                let el = <MainPageItem toFolderView={(param) => {
+                    this.toFolder(param)
+                }} key={pathKey[i] + "" + getRandomNum()} itemName={pathKey[i]}/>
                 elms.push(el);
             }
         }
