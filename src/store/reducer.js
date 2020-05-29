@@ -11,6 +11,9 @@ const defaultState = {
     },
     FileDetailView: {
         fileUrl: null
+    },
+    UploadView:{
+        path: null
     }
 
 }
@@ -37,6 +40,10 @@ export default (state = defaultState, action) => {
     }else if (actionType.update_detailView===action.type){
         nState = Object.assign({}, state);
         nState.FileDetailView=action.value;
+        return nState;
+    }else if (actionType.update_uploadView===action.type){
+        nState = Object.assign({}, state);
+        nState.UploadView=action.value;
         return nState;
     }
     return state;

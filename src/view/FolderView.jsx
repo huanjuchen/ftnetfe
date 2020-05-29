@@ -19,6 +19,7 @@ class FolderView extends React.Component {
         this.state = {
             data: {
                 name: null,
+                url: null,
                 parentPath: null,
                 subPaths: [],
                 subFiles: []
@@ -32,6 +33,7 @@ class FolderView extends React.Component {
         this.path = null;
         //是否正在加载
         this.load = false;
+        this.toUpload = this.toUpload.bind(this);
     }
 
     /*
@@ -39,6 +41,7 @@ class FolderView extends React.Component {
         {
             parentPath: "String",
             name: "String",
+            url:"String",
             subPaths: [Array, Array, Array],
             subFiles: [Array, Array, Array]
         }
@@ -60,6 +63,15 @@ class FolderView extends React.Component {
     toFileDetail(param) {
         store.dispatch({type: actionType.update_detailView, value: param})
         this.props.history.push("/fileDetail");
+    }
+
+
+    toUpload() {
+        let obj = {
+            path: this.state.data.url
+        }
+        store.dispatch({type: actionType.update_uploadView, value: obj});
+        this.props.history.push("/uploadView");
     }
 
 
@@ -152,6 +164,7 @@ class FolderView extends React.Component {
         //子文件组件
         let sfe = [];
 
+        let ab;
         let p = this.state.data.parentPath;
         let sp = this.state.data.subPaths;
         let sf = this.state.data.subFiles;
@@ -174,11 +187,17 @@ class FolderView extends React.Component {
         if (sf != null) {
             sfe = [];
             for (let i = 0; i < sf.length; i++) {
-                sfe.push(<FileItem parentPath={this.path} parentKeyName={this.keyName} path={sf[i]}
+                sfe.push(<FileItem path={sf[i]}
                                    key={sf[i].name + "" + getRandomNum()} toFileDetail={(param) => {
                     this.toFileDetail(param)
                 }}/>)
             }
+        }
+
+        if (this.state.data.url != null) {
+            ab = <div className={FvwCss.addBtn} onClick={this.toUpload}>
+                上传
+            </div>
         }
 
 
@@ -187,7 +206,9 @@ class FolderView extends React.Component {
                 this.state.data.name != null ?
                     <FolderViewHeader title={this.state.data.name} toMain={(param) => {
                         this.doToMain(param)
-                    }}/> : <FolderViewHeader toMain={(param) => {this.doToMain(param)}}/>
+                    }}/> : <FolderViewHeader toMain={(param) => {
+                        this.doToMain(param)
+                    }}/>
             }
             <div className="mainContainer">
                 <div className={FvwCss.divideBox}/>
@@ -196,7 +217,9 @@ class FolderView extends React.Component {
                     {spe}
                     {sfe}
                 </div>
+
             </div>
+            {ab}
         </div>
     }
 

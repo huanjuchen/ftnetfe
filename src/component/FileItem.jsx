@@ -12,7 +12,7 @@ class FileItem extends React.Component {
 
     render() {
         return <div className={FileItemCss.fileItem} onClick={() => {
-            this.toFileDetails(this.props.path.url,this.props.parentPath,this.props.parentKeyName)
+            this.toFileDetails(this.props.path.url)
         }}>
             <div className={FileItemCss.fileImg}>
                 <img width="100%" height="100%" src={FileIcon} alt={"文件"}/>

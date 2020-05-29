@@ -7,6 +7,7 @@ class MainPageItem extends React.Component {
 
     toFolderView(param) {
         this.props.toFolderView(param);
+
     }
 
 
