@@ -7,6 +7,9 @@ import axios from "axios";
 import {getFileSizeStr} from "../util/FtUtils"
 
 
+/**
+ * 上传容器组件
+ */
 class UploadView extends React.Component {
 
     constructor(props) {
@@ -41,6 +44,9 @@ class UploadView extends React.Component {
     }
 
 
+    /**
+     * 初始化路径以及URL
+     */
     init() {
         let sp = store.getState().UploadView.path;
         if (sp != null) {
@@ -52,10 +58,11 @@ class UploadView extends React.Component {
         }
     }
 
+    /**
+     * 选择文件后调用
+     */
     fileInputChange() {
         this.uploadFile = this.inputFile.current.files[0];
-
-
         if (this.uploadFile != null) {
             let fn = this.uploadFile.name;
             let fs = this.uploadFile.size;
@@ -70,6 +77,9 @@ class UploadView extends React.Component {
     }
 
 
+    /**
+     * 上传文件
+     */
     doUpload() {
         //复位
         this.successCount = 0;
@@ -117,6 +127,9 @@ class UploadView extends React.Component {
         }
     }
 
+    /**
+     * 真正执行Ajax请求
+     */
     async doUpload0(formData, path, name, total, seq) {
         let config = {
             headers: {
@@ -139,6 +152,9 @@ class UploadView extends React.Component {
         });
     }
 
+    /**
+     *  执行合并Ajax请求
+     */
     doMerge0(path, name, total) {
         let formData = new FormData();
         formData.append("path", path);
@@ -158,6 +174,9 @@ class UploadView extends React.Component {
         })
     }
 
+    /**
+     * 对隐藏的input file 触发其点击事件
+     */
     doSelectFile() {
         if (FtConfig.dev) {
             console.log("点击选择文件按钮");
@@ -183,6 +202,9 @@ class UploadView extends React.Component {
     }
 
 
+    /**
+     * 转到主页面
+     */
     toMainPage() {
         if (FtConfig.dev) {
             console.log("返回首页");
@@ -190,6 +212,9 @@ class UploadView extends React.Component {
         this.props.history.push("/");
     }
 
+    /**
+     * 返回文件夹页面
+     */
     toFolderView() {
         this.props.history.push("/viewFolder");
     }

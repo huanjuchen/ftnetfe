@@ -2,7 +2,9 @@ import React from "react";
 import PathItemCss from "../css/PathItem.module.css";
 import FolderImg from "../img/folderImg.svg";
 
-
+/**
+ * 文件夹组件
+ */
 class PathItem extends React.Component {
 
     // eslint-disable-next-line no-useless-constructor

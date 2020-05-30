@@ -66,6 +66,9 @@ class FolderView extends React.Component {
     }
 
 
+    /**
+     * 转到登录页面
+     */
     toUpload() {
         let obj = {
             path: this.state.data.url

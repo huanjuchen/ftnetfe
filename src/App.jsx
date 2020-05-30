@@ -8,6 +8,9 @@ import store from "./store";
 import {Provider} from "react-redux";
 
 
+/**
+ * 路由配置
+ */
 class App extends React.Component {
 
     render() {
