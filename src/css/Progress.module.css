@@ -1,0 +1,31 @@
+.progressBox{
+    width: 100%;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+}
+
+.progressCol{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.progressItem{
+    width: 90%;
+}
+.progress{
+    background-color: cornflowerblue;
+    height: 18px;
+    box-sizing: border-box;
+}
+
+.progressText{
+    display: flex;
+    flex-wrap: nowrap;
+    overflow: hidden;
+    justify-content: center;
+    font-size: large;
+    margin-top: 5px;
+}

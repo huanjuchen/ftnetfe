@@ -1,5 +1,4 @@
 .uploadViewBox {
-    width: 100%;
     display: flex;
     flex-direction: column;
     flex-wrap: nowrap;
@@ -29,21 +28,28 @@
 }
 
 .infoBox {
+    margin-top: 100px;
     width: 100%;
-    height: 240px;
 }
 
-.fileSelect {
-    box-sizing: border-box;
+.fileInfoBox {
     display: flex;
+    width: 100%;
     flex-direction: row;
     justify-content: center;
-    width: 90%;
-    padding: 10px 20px;
-    border: solid 1px #E0E0E0FF;
-    background-color: #E0E0E0FF;
-    opacity: 0.7;
 }
+
+.fileInfoCol{
+    display: flex;
+    width: 90%;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    /*overflow: hidden;*/
+}
+
+
+
+
 
 .BtnGroup {
     display: flex;
@@ -52,8 +58,16 @@
     cursor: pointer;
 }
 
+.selectBtnGroup{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    cursor: pointer;
+    width: 90%;
+}
+
 .handleBtn {
-    padding: 10px 20px;
+    padding: 10px 15px;
     border: solid 1px #E0E0E0FF;
     background-color: #E0E0E0FF;
     opacity: 0.7;
@@ -61,7 +75,18 @@
     margin: 5px;
 }
 
-.fileSelect:active,.handleBtn:active{
+.selectBtn{
+    padding: 10px 15px;
+    border: solid 1px #E0E0E0FF;
+    background-color: #E0E0E0FF;
+    opacity: 0.7;
+    border-radius: 2px;
+    margin: 5px;
+
+}
+
+
+.fileSelect:active,.handleBtn:active,.selectBtn:active{
     opacity: 1.0;
     background-color: #9e9e9eFF;
 }

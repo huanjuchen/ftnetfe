@@ -56,7 +56,7 @@ class FileDetailView extends React.Component {
         this.props.history.push("/");
     }
 
-    goBack(pkn,path){
+    goBack(){
         this.props.history.push("/viewFolder")
 
     }
@@ -103,7 +103,7 @@ class FileDetailView extends React.Component {
                         <button className={FileDetailCss.fileHandleBtn}>下载</button>
                     </a>
                     <button onClick={()=>{
-                        this.goBack(this.parentKeyName,this.parentPath)
+                        this.goBack()
                     }} className={FileDetailCss.fileHandleBtn}>返回目录</button>
                     <button onClick={()=>{this.toMainPage()}} className={FileDetailCss.fileHandleBtn}>返回主页</button>
                 </div>
